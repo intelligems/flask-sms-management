@@ -26,7 +26,7 @@ def index():
     return redirect("https://www.intelligems.eu", code=301)
 
 
-@app.route('/sms', methods=['POST'])
+@app.route('/sms/', methods=['POST'])
 def sms():
     number = request.form['From']
     message_body = request.form['Body']
