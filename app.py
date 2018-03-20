@@ -1,7 +1,7 @@
 import logging
 import requests
 
-from flask import Flask, request
+from flask import Flask, request, redirect
 from twilio import twiml
 
 
@@ -19,6 +19,11 @@ def send_to_slack(from_number, message_body):
 def respond_with_sms(to, message):
     resp = twiml.Response()
     resp.message('Hello {}: {}'.format(number, message_body))
+
+
+@app.route('/', methods=['GET'])
+def index():
+    return redirect("https://www.intelligems.eu", code=301)
 
 
 @app.route('/sms', methods=['POST'])
