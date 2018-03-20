@@ -2,7 +2,7 @@ import json
 import logging
 import requests
 
-from flask import Flask, request, redirect
+from flask import Flask, jsonify, request, redirect
 from twilio import twiml
 
 
@@ -29,9 +29,24 @@ def index():
 
 @app.route('/sms/', methods=['POST'])
 def sms():
-    number = request.form['From']
-    message_body = request.form['Body']
-    send_to_slack(number, message_body)
+    try:
+        number = request.form['From']
+        message_body = request.form['Body']
+        send_to_slack(number, message_body)
+        return jsonify(
+            {
+                "success": True
+            }
+        )
+    except Exception as e:
+        logging.error(e)
+        return jsonify(
+            {
+                "success": False,
+                "message": "{}".format(e)
+            }
+        )
+
 
 if __name__ == '__main__':
     app.run()
