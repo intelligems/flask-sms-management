@@ -12,7 +12,7 @@ def send_to_slack(from_number, message_body):
     payload = {
         "text": "{}: {}".format(from_number, message_body)
     }
-    requests.post(url=url, data=json.dumps(payload))
+    requests.post(url=webhook_url, data=json.dumps(payload))
     logging.info("Sent message to slack")
 
 
