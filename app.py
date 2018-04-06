@@ -34,19 +34,10 @@ def sms():
         to_number = request.form['To']
         message_body = request.form['Body']
         send_to_slack(from_number, to_number, message_body)
-        return jsonify(
-            {
-                "success": True
-            }
-        )
+        return "forwarded with success"
     except Exception as e:
         logging.error(e)
-        return jsonify(
-            {
-                "success": False,
-                "message": "{}".format(e)
-            }
-        )
+        return str(e)
 
 
 if __name__ == '__main__':
