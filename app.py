@@ -9,7 +9,10 @@ from twilio import twiml
 app = Flask(__name__)
 
 def send_to_slack(from_number, to_number, message_body):
-    webhook_url = "https://hooks.slack.com/services/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"
+    webhook_url = os.getenv('SLACK_WEBHOOK_URL', None)
+    if not webhook_url:
+        logging.error('Cannot proceed without the slack webhook url')
+        return
     payload = {
         "text": "({} -> {}): {}".format(from_number, to_number, message_body)
     }
